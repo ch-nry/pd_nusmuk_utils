@@ -1,0 +1,8 @@
+#N canvas 717 414 450 300 10;
+#X msg 163 139 read test.txt;
+#X msg 183 167 write test.txt;
+#X obj 163 201 _mtx_preset 12 3;
+#X text 40 16 same as mtx_preset but provide read / write fonctionalities
+;
+#X connect 0 0 2 0;
+#X connect 1 0 2 0;

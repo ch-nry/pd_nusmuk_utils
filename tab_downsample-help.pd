@@ -1,0 +1,25 @@
+#N canvas 98 644 777 410 10;
+#X obj 88 62 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 411 55 table src2 1000;
+#X msg 139 91 src src2;
+#X msg 154 115 dst dst2;
+#X msg 168 138 factor 2;
+#X obj 85 248 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 411 105 table dst2 300;
+#X obj 410 33 table src 10;
+#X obj 411 85 table dst 3;
+#X obj 87 205 tab_downsample src dst 3;
+#X text 252 206 source table / dest table / downsample factor;
+#X msg 184 166 1;
+#X text 114 62 =;
+#X msg 138 61 0;
+#X text 223 167 offset;
+#X connect 0 0 9 0;
+#X connect 2 0 9 0;
+#X connect 3 0 9 0;
+#X connect 4 0 9 0;
+#X connect 9 0 5 0;
+#X connect 11 0 9 0;
+#X connect 13 0 9 0;

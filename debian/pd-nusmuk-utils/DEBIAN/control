@@ -1,0 +1,27 @@
+Package: pd-nusmuk-utils
+Version: 1-1
+Architecture: i386
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Installed-Size: 524
+Depends: libc6 (>= 2.4), pd
+Section: sound
+Priority: optional
+Homepage: http://puredata.info
+Description: a random collection of usefull Pd objects by Cyrille Henry
+ This is my collection of abstraction that i always use.
+ the object included are :
+  between
+  line3
+  pps
+  filtered_random
+  many_bang
+  rand_diff
+  fmod
+  once
+  randn
+  lb
+  pbank
+  rnd_flow
+  lfo
+  p
+  rnd_metro
