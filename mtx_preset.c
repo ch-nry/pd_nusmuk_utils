@@ -117,7 +117,7 @@ void mtx_preset_matrix(t_mtx_preset *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else {
-        error("bad matrix");
+        pd_error(x,"bad matrix");
         return;
     }
 }
@@ -130,7 +130,7 @@ void mtx_preset_row(t_mtx_preset *x, t_symbol *s, int argc, t_atom *argv)
     if ((argc > 0) && (argv[0].a_type == A_FLOAT)) 
         row = atom_getfloatarg(0,argc,argv);
     else {
-        error("bad row");
+        pd_error(x,"bad row");
         return;
     }
     row = min(x->sizeY-1, row);
@@ -148,7 +148,7 @@ void mtx_preset_col(t_mtx_preset *x, t_symbol *s, int argc, t_atom *argv)
     if ((argc > 0) && (argv[0].a_type == A_FLOAT)) 
         col = atom_getfloatarg(0,argc,argv);
     else {
-        error("bad col");
+        pd_error(x,"bad col");
         return;
     }
     col = min(x->sizeX-1, col);

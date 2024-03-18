@@ -156,12 +156,12 @@ void pbank_set(t_pbank *x, t_symbol *s, int ac, t_atom *argv)
     if (ac < 3)
     {
     	post("ac=%d",ac);
-	error("pbank_set: takes at least 3 arguments: column row item(s)");
+	pd_error(x,"pbank_set: takes at least 3 arguments: column row item(s)");
 	return;
     }
     if ((argv)->a_type != A_FLOAT || (argv+1)->a_type != A_FLOAT)    
     {
-	error("pbank_set: first arguments must of type float (columnNo. or rowNo.)");
+	pd_error(x,"pbank_set: first arguments must of type float (columnNo. or rowNo.)");
 	return;
     }
 
@@ -179,7 +179,7 @@ void pbank_set(t_pbank *x, t_symbol *s, int ac, t_atom *argv)
     {
 	if ((argv)->a_type != A_FLOAT && (argv)->a_type != A_SYMBOL && (argv)->a_type != A_FLOAT)  
 	{
-	    error("pbank_set:  argument no %d must be afloat or symbol",ac+1);
+	    pd_error(x,"pbank_set:  argument no %d must be afloat or symbol",ac+1);
 	    return;
 	}    
 	*(shit+column++) = *argv++;
@@ -197,12 +197,12 @@ void pbank_put(t_pbank *x, t_symbol *s, int ac, t_atom *argv)
     if (ac < 2)
     {
     	post("ac=%d",ac);
-	error("pbank_put: takes at least 2 arguments: column item(s)");
+	pd_error(x,"pbank_put: takes at least 2 arguments: column item(s)");
 	return;
     }
     if ((argv)->a_type != A_FLOAT)    
     {
-	error("pbank_put: first argument must a number (columnNo.)");
+	pd_error(x,"pbank_put: first argument must a number (columnNo.)");
 	return;
     }
     if ((column = (int)(argv)->a_w.w_float) < 0) column = 0;
@@ -216,7 +216,7 @@ void pbank_put(t_pbank *x, t_symbol *s, int ac, t_atom *argv)
     {
 	if ((argv)->a_type != A_FLOAT && (argv)->a_type != A_SYMBOL && (argv)->a_type != A_FLOAT)  
 	{
-	    error("pbank_put:  argument no %d must be a float or symbol",ac);
+	    pd_error(x,"pbank_put:  argument no %d must be a float or symbol",ac);
 	    return;
 	}    
 	*(shit+column++) = *argv++;
@@ -266,7 +266,7 @@ void pbank_recall(t_pbank  *x, t_float row_float)	/* dumps (outputs) and copies 
 		else if (ebuff->a_type == A_SYMBOL) type = z_symbol;
 		else 
 		{
-		    error("pbank_list: 3rd element must be a float or sym.");
+		    pd_error(x,"pbank_list: 3rd element must be a float or sym.");
 		    goto exit;
 		}
 		typedmess(x->p_receives[z]->s_thing, type,ac, ebuff);
@@ -342,7 +342,7 @@ void pbank_recallf(t_pbank  *x, t_float row_float)	/* interpol, dumps (outputs) 
 	      if (interpfac <.5) SETSYMBOL(ebuff, av->a_w.w_symbol);
 	      else SETSYMBOL(ebuff, avplus1->a_w.w_symbol);			
 	  }	
-	  else error("pbank: bug found in recallf method");
+	  else pd_error(x,"pbank: bug found in recallf method");
 	}
 
 #ifdef why_is_this_here_sheefa
@@ -362,7 +362,7 @@ void pbank_recallf(t_pbank  *x, t_float row_float)	/* interpol, dumps (outputs) 
 			if (ebuff->a_type == A_FLOAT && av->a_type == A_FLOAT)
 				SETFLOAT(ebuff, ebuff->a_w.w_float + av->a_w.w_float * (indexf - u +1)); 			else if (ebuff->a_type == A_SYMBOL)
 				SETSYMBOL(ebuff, av->a_w.w_symbol);
-			else 	error("pbank: bug found in recallf method");	
+			else 	pd_error(x,"pbank: bug found in recallf method");	
 		}
 	}
 
@@ -387,7 +387,7 @@ void pbank_recallf(t_pbank  *x, t_float row_float)	/* interpol, dumps (outputs) 
 				if (ebuff->a_type == A_SYMBOL) type = z_symbol;
 				else 
 					{
-					error("pbank_list: 3rd element must be a float or sym.");
+					pd_error(x,"pbank_list: 3rd element must be a float or sym.");
 					goto exit;
 					}
 				typedmess(x->p_receives[z]->s_thing, type,ac, ebuff);
@@ -472,7 +472,7 @@ void pbank_interp(t_pbank *x, t_symbol *s, int argc, t_atom *argv)
 				if (ebuff->a_type == A_SYMBOL) type = z_symbol;
 				else 
 				{
-					error("pbank_list: 3rd element must be a float or sym.");
+					pd_error(x,"pbank_list: 3rd element must be a float or sym.");
 					goto exit;
 				}
 				typedmess(x->p_receives[z]->s_thing, type,ac, ebuff);
@@ -533,7 +533,7 @@ void pbank_dump(t_pbank  *x, t_symbol *s, int argc, t_atom *argv)	/* dumps (outp
 				   else if (ebuff->a_type == A_SYMBOL) type = z_symbol;
 				   else 
 				   {
-					   error("pbank_list: 3rd element must be a float or sym.");
+					   pd_error(x,"pbank_list: 3rd element must be a float or sym.");
 					   goto exit;
 				   }
 				   typedmess(x->p_receives[z]->s_thing, type,ac, ebuff);
@@ -582,7 +582,7 @@ void pbank_dump(t_pbank  *x, t_symbol *s, int argc, t_atom *argv)	/* dumps (outp
 					else if (ebuff->a_type == A_SYMBOL) type = z_symbol;
 					else 
 					{
-						error("pbank_list: 3rd element must be a float or sym.");
+						pd_error(x,"pbank_list: 3rd element must be a float or sym.");
 						goto exit;
 					}
 					typedmess(x->p_receives[z]->s_thing, type,ac, ebuff);
@@ -649,14 +649,14 @@ void pbank_list(t_pbank *x, t_symbol *s, int argc, t_atom *argv)
 
     if ((argc != 2) && (argc != 3))
     {
-	error("pbank_list: less than 2, or more than 3 elements in list");
+	pd_error(x,"pbank_list: less than 2, or more than 3 elements in list");
 	goto exit;
     }
     
     
     if (((argv)->a_type != A_FLOAT) || ((argv+1)->a_type != A_FLOAT))
     {
-	error("pbank_list: first two elements must be numbers");
+	pd_error(x,"pbank_list: first two elements must be numbers");
 	goto exit;
     }
     if ((column = (int)(argv)->a_w.w_float) < 0) column = 0;
@@ -690,7 +690,7 @@ void pbank_list(t_pbank *x, t_symbol *s, int argc, t_atom *argv)
 		else if (av->a_type == A_SYMBOL) type = z_symbol;
 		else 
 		{
-		    error("pbank_list: 3rd element must be a float or sym.");
+		    pd_error(x,"pbank_list: 3rd element must be a float or sym.");
 		    goto exit;
 		}
 		typedmess(x->p_receives[column]->s_thing, type,ac, av);
@@ -731,7 +731,7 @@ void pbank_list(t_pbank *x, t_symbol *s, int argc, t_atom *argv)
 		    SETSYMBOL(av,(argv+2)->a_w.w_symbol);
 		    break;
 	    default: 	
-		error("pbank_list: 3rd element must be a float or sym.");
+		pd_error(x,"pbank_list: 3rd element must be a float or sym.");
 		goto exit;
 	}
     *x->p_dirty = (t_atom *)1;	/* set dirty flag */
@@ -756,7 +756,7 @@ int pbank_fromtext(t_pbank *x,void *b)
                                                 /* get pbank symbol */
     if (ap->a_type != A_SYMBOL || ap->a_w.w_symbol != gensym("pbank"))
     {
-	error("pbank_fromtext: bad file format: item one must be the symbol 'pbank");
+	pd_error(x,"pbank_fromtext: bad file format: item one must be the symbol 'pbank");
 	goto error;
     }
 
@@ -767,7 +767,7 @@ int pbank_fromtext(t_pbank *x,void *b)
     	// binbuf_getatom(b,&p1,&p2,&at);		/* get columns and rows */
 	if (ap->a_type != A_FLOAT)
 	{
-	    error("pbank_fromtext: bad file format: item two and three must be COLUMNcount and ROWcount");
+	    pd_error(x,"pbank_fromtext: bad file format: item two and three must be COLUMNcount and ROWcount");
 	    goto error;
 	}
 	if (z==0) columns = (int)ap->a_w.w_float;
@@ -776,12 +776,12 @@ int pbank_fromtext(t_pbank *x,void *b)
    
     if (columns < 1 || rows < 1)
     {
-	error("pbank_fromtext: bad value(s) for item two and/or three (COLUMNcount and/or ROWcount)");
+	pd_error(x,"pbank_fromtext: bad value(s) for item two and/or three (COLUMNcount and/or ROWcount)");
 	goto error;
     }
     if (columns != x->p_columns)
     {
-	error("pbank_fromtext: bad file format: wrong no. of columns (%d) in file", columns);
+	pd_error(x,"pbank_fromtext: bad file format: wrong no. of columns (%d) in file", columns);
 	goto error;
     }
     
@@ -789,7 +789,7 @@ int pbank_fromtext(t_pbank *x,void *b)
     ap++, count++;
     if (ap->a_type != A_COMMA)
     {
-	error("pbank_fromtext: bad file format: comma expected after third item");
+	pd_error(x,"pbank_fromtext: bad file format: comma expected after third item");
 	goto error;
     }
     
@@ -806,7 +806,7 @@ int pbank_fromtext(t_pbank *x,void *b)
         if (rowpos > x->p_rows)	// safety check- remove later
         {
             bug("pbank_fromtext: rowpos=%d x->p_rows=%d  items=%d  argc=%d",rowpos,x->p_rows,count,argc);
-            error("pbank_fromtext: rowpos greater than x->p_rows:  aborting");
+            pd_error(x,"pbank_fromtext: rowpos greater than x->p_rows:  aborting");
             goto error;
         }
    
@@ -820,7 +820,7 @@ int pbank_fromtext(t_pbank *x,void *b)
 	    if (count == argc)  goto done;
             else 
             {
-                error("pbank_fromtext: unexpected A_NULL type read at position %d: aborting", count);
+                pd_error(x,"pbank_fromtext: unexpected A_NULL type read at position %d: aborting", count);
                 goto error;
             }
 	}
@@ -990,7 +990,7 @@ void pbank_saveto(t_pbank *x,char *fn)
     binbuf_free(b);
 
     if (errorf) 
-        error("pbank_saveto: couldn't write %s", fn);
+        pd_error(x,"pbank_saveto: couldn't write %s", fn);
     else 
     {
         *x->p_dirty = NIL;
@@ -1027,7 +1027,7 @@ void pbank_dispose(t_pbank *x)
 	}
 	if (!piss) 
 	{
-	    error("pbank_dispose: bug found- can't find symbol");
+	    pd_error(x,"pbank_dispose: bug found- can't find symbol");
 	    goto skip;
 	}
        /*  post("found %s", piss->s_sym->s_name); */
@@ -1045,7 +1045,7 @@ void pbank_dispose(t_pbank *x)
 	{
 	    if (piss == pbank_banks)	/* first element in list of only one element*/
 	    {
-		/* post("같같같 unique element in list"); */
+		/* post("\B0\B0\B0\B0\B0\B0 unique element in list"); */
 		 freebytes(piss, (int)sizeof(t_shared));
 		 pbank_banks = NIL;
 	    }
@@ -1053,17 +1053,17 @@ void pbank_dispose(t_pbank *x)
 	    {
 		if (!prePiss) 
 		{
-		    error("bug found in pbank_dispose (prePiss)");
+		    pd_pd_error(x,x,"bug found in pbank_dispose (prePiss)");
 		    goto skip;
 		}
-		/* post("같같같 last element in list"); */
+		/* post("\B0\B0\B0\B0\B0\B0 last element in list"); */
 		prePiss->s_next = NIL;
 		freebytes(piss, (int)sizeof(t_shared));
 	    }
 	}
 	else if (piss == pbank_banks)	/* first element in list of at least two elements */
 	{
-	   /*  post("같같같 first element in list"); */
+	   /*  post("\B0\B0\B0\B0\B0\B0 first element in list"); */
 	    pbank_banks =  piss->s_next;
 	    freebytes(piss, (int)sizeof(t_shared));
 	}
@@ -1071,10 +1071,10 @@ void pbank_dispose(t_pbank *x)
 	{
 	    if (!prePiss) 
 	    {
-		error("bug found in pbank_dispose (prePiss)");
+		pd_pd_error(x,x,"bug found in pbank_dispose (prePiss)");
 		goto skip;
 	    }
-	  /*  post("같같같 embedded element in list"); */
+	  /*  post("\B0\B0\B0\B0\B0\B0 embedded element in list"); */
 	    prePiss->s_next = piss->s_next;
 	    freebytes(piss, (int)sizeof(t_shared));
 	}
@@ -1147,7 +1147,7 @@ void *pbank_new(t_symbol *s, int argc, t_atom *argv)
 
     if (!InRange(argc,2,4))
     {
-	error("pbank_new: bad arg count - takes: colums rows fname <opt symbol> sendname");
+	pd_error(x,"pbank_new: bad arg count - takes: colums rows fname <opt symbol> sendname");
 	goto err;
     }
     
@@ -1156,14 +1156,14 @@ void *pbank_new(t_symbol *s, int argc, t_atom *argv)
     
     if (((argv)->a_type != A_FLOAT) || ((argv+1)->a_type != A_FLOAT))
     {
-	error("pbank_new: first two elements must be numbers");
+	pd_error(x,"pbank_new: first two elements must be numbers");
 	goto err;
     }
 
 
 //    if ((argv)->a_w.w_float < 1 || (argv+1)->a_w.w_float < 1) 
 //    {
-//	error("pbank_new: first or second argument less than 1, can't continue");
+//	pd_error(x,"pbank_new: first or second argument less than 1, can't continue");
 //	goto err;
 //    }	 
 
@@ -1188,7 +1188,7 @@ void *pbank_new(t_symbol *s, int argc, t_atom *argv)
     {
 	if ((argv+2)->a_type != A_SYMBOL)
 	{
-	    error("pbank_new: bad third arg: needs to be a symbol (or empty string %s)",gensym("")->s_name);
+	    pd_error(x,"pbank_new: bad third arg: needs to be a symbol (or empty string %s)",gensym("")->s_name);
 	    goto err;
 	}
 	shit = (argv+2)->a_w.w_symbol->s_name;
@@ -1208,7 +1208,7 @@ void *pbank_new(t_symbol *s, int argc, t_atom *argv)
             }
             else 
             {
-                error("pbank_new: optional fourth arg. needs to be a symbol");
+                pd_error(x,"pbank_new: optional fourth arg. needs to be a symbol");
                 goto err;
             }
         }
@@ -1237,7 +1237,7 @@ void *pbank_new(t_symbol *s, int argc, t_atom *argv)
                     strcmp(class_getname(pd_class(x->p_receives[z]->s_thing)), "receive") &&
                     strcmp(class_getname(pd_class(x->p_receives[z]->s_thing)), "bindlist"))
 		{
- 		    error("pbank_new: symbol %s already being used, can't use it",shit);
+ 		    pd_error(x,"pbank_new: symbol %s already being used, can't use it",shit);
 		    post("z=%d  found a %s",z,class_getname(pd_class(x->p_receives[z]->s_thing)));
 		    goto err;
 		}
@@ -1299,7 +1299,7 @@ t_atom **pbank_getmem(t_symbol *name,int columns,int rows)
 		    {
 		    	if (piss->s_columns != columns || piss->s_rows != rows)
 			{
-			    error("pbank_getmem: pbank %s's dimensions must be (%d x %d)",name->s_name,
+			    pd_error(0,"pbank_getmem: pbank %s's dimensions must be (%d x %d)",name->s_name,
 			    			 piss->s_columns,piss->s_rows);
 			    return(NIL);
 			}
@@ -1309,12 +1309,12 @@ t_atom **pbank_getmem(t_symbol *name,int columns,int rows)
 		    }
 		    piss = piss->s_next;
 		}
-		error("pbank_getmem: bug: name %s not found",name->s_name);
+		pd_error(0,"pbank_getmem: bug: name %s not found",name->s_name);
 		return(NIL);
 	    }
 	    else /* bad symbol - already taken - can't do anything */
 	    {
-		error("pbank_getmem: symbol %s already being used by another object",name->s_name);
+		pd_error(0,"pbank_getmem: symbol %s already being used by another object",name->s_name);
 		return(NIL);
 	    }
 	}
