@@ -1053,7 +1053,7 @@ void pbank_dispose(t_pbank *x)
 	    {
 		if (!prePiss) 
 		{
-		    pd_pd_error(x,x,"bug found in pbank_dispose (prePiss)");
+		    pd_error(x,"bug found in pbank_dispose (prePiss)");
 		    goto skip;
 		}
 		/* post("\B0\B0\B0\B0\B0\B0 last element in list"); */
@@ -1071,7 +1071,7 @@ void pbank_dispose(t_pbank *x)
 	{
 	    if (!prePiss) 
 	    {
-		pd_pd_error(x,x,"bug found in pbank_dispose (prePiss)");
+		pd_error(x,"bug found in pbank_dispose (prePiss)");
 		goto skip;
 	    }
 	  /*  post("\B0\B0\B0\B0\B0\B0 embedded element in list"); */
