@@ -1,6 +1,6 @@
 # Makefile for nusmuk_audio
 
- lib.name = nusmuk_utils
+ lib.name = nusmuk-utils
 
  class.sources = line3.c pbank.c mtx_preset.c tab_downsample_max.c tab_downsample_min.c tab_downsample_average.c tab_downsample.c tab_upsample.c  tab_upsample_copy.c tab_max.c tab_min.c tab_integrate.c tab_derivate.c
 
